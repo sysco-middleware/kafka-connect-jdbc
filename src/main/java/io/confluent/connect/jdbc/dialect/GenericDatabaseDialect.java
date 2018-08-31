@@ -139,7 +139,7 @@ public class GenericDatabaseDialect implements DatabaseDialect {
    * @param config the connector configuration; may not be null
    */
   public GenericDatabaseDialect(AbstractConfig config) {
-    this(config, IdentifierRules.DEFAULT);
+    this(config, new IdentifierRules(config.getString(JdbcSinkConfig.QUOTE_CONFIG)));
   }
 
   /**

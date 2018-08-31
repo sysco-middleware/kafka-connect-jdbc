@@ -187,6 +187,11 @@ public class JdbcSinkConfig extends AbstractConfig {
       + "specific dialect. All properly-packaged dialects in the JDBC connector plugin "
       + "can be used.";
 
+  public static final String QUOTE_CONFIG = "quote";
+  public static final String QUOTE_DISPLAY = "Quotation for SQL Statements";
+  public static final String QUOTE_DEFAULT = "\"";
+  public static final String QUOTE_DOC = "TODO";
+
   public static final ConfigDef CONFIG_DEF = new ConfigDef()
         // Connection
         .define(
@@ -349,6 +354,14 @@ public class JdbcSinkConfig extends AbstractConfig {
             2,
             ConfigDef.Width.SHORT,
             RETRY_BACKOFF_MS_DISPLAY
+        )
+        //Others
+        .define(
+            QUOTE_CONFIG,
+            ConfigDef.Type.STRING,
+            QUOTE_DEFAULT,
+            ConfigDef.Importance.LOW,
+            QUOTE_DOC
         );
 
   public final String connectionUrl;
@@ -365,6 +378,7 @@ public class JdbcSinkConfig extends AbstractConfig {
   public final List<String> pkFields;
   public final Set<String> fieldsWhitelist;
   public final String dialectName;
+  public final String quote;
 
   public JdbcSinkConfig(Map<?, ?> props) {
     super(CONFIG_DEF, props);
@@ -382,6 +396,7 @@ public class JdbcSinkConfig extends AbstractConfig {
     pkFields = getList(PK_FIELDS);
     dialectName = getString(DIALECT_NAME_CONFIG);
     fieldsWhitelist = new HashSet<>(getList(FIELDS_WHITELIST));
+    quote = getString(QUOTE_CONFIG);
   }
 
   private String getPasswordValue(String key) {

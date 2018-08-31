@@ -152,12 +152,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <inherited>true</inherited>
+                <!--<inherited>true</inherited>-->
                 <configuration>
-                    <compilerArgs>
-                        <arg>-Xlint:all</arg>
-                        <arg>-Werror</arg>
-                    </compilerArgs>
+                    <!--<compilerArgs>-->
+                        <!--<arg>-Xlint:all</arg>-->
+                        <!--<arg>-Werror</arg>-->
+                    <!--</compilerArgs>-->
                 </configuration>
             </plugin>
             <plugin>

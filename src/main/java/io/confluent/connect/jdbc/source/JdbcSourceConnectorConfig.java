@@ -270,6 +270,11 @@ public class JdbcSourceConnectorConfig extends AbstractConfig {
       + "In most cases it only makes sense to have either TABLE or VIEW.";
   private static final String TABLE_TYPE_DISPLAY = "Table Types";
 
+  public static final String QUOTE_CONFIG = "quote";
+  public static final String QUOTE_DISPLAY = "Quotation for SQL Statements";
+  public static final String QUOTE_DEFAULT = "\"";
+  public static final String QUOTE_DOC = "TODO";
+
   public static ConfigDef baseConfigDef() {
     ConfigDef config = new ConfigDef();
     addDatabaseOptions(config);
@@ -405,7 +410,14 @@ public class JdbcSourceConnectorConfig extends AbstractConfig {
         ++orderInGroup,
         Width.LONG,
         DIALECT_NAME_DISPLAY,
-        DatabaseDialectRecommender.INSTANCE);
+        DatabaseDialectRecommender.INSTANCE
+    ).define(
+        QUOTE_CONFIG,
+        ConfigDef.Type.STRING,
+        QUOTE_DEFAULT,
+        ConfigDef.Importance.LOW,
+        QUOTE_DOC
+    );
   }
 
   private static final void addModeOptions(ConfigDef config) {
