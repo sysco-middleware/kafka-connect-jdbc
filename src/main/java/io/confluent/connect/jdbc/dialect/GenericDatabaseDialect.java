@@ -411,6 +411,8 @@ public class GenericDatabaseDialect implements DatabaseDialect {
   @Override
   public IdentifierRules identifierRules() {
     if (identifierRules.get() == null) {
+      // First check if configuration contain quotes
+      final String quoteConfig = config.getString(JdbcSourceConnectorConfig.QUOTE_CONFIG);
       // Otherwise try to get the actual quote string and separator from the database, since
       // many databases allow them to be changed
       try (Connection connection = getConnection()) {
@@ -421,6 +423,10 @@ public class GenericDatabaseDialect implements DatabaseDialect {
         if (leadingQuoteStr == null || leadingQuoteStr.isEmpty()) {
           leadingQuoteStr = defaultIdentifierRules.leadingQuoteString();
           trailingQuoteStr = defaultIdentifierRules.trailingQuoteString();
+        }
+        if (quoteConfig != null) {
+          leadingQuoteStr = quoteConfig;
+          trailingQuoteStr = quoteConfig;
         }
         if (separator == null || separator.isEmpty()) {
           separator = defaultIdentifierRules.identifierDelimiter();

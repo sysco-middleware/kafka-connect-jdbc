@@ -14,6 +14,7 @@
 
 package io.confluent.connect.jdbc.dialect;
 
+import io.confluent.connect.jdbc.source.JdbcSourceConnectorConfig;
 import org.apache.kafka.connect.data.Date;
 import org.apache.kafka.connect.data.Decimal;
 import org.apache.kafka.connect.data.Schema;
@@ -32,7 +33,8 @@ public class Db2DatabaseDialectTest extends BaseDialectTest<Db2DatabaseDialect> 
 
   @Override
   protected Db2DatabaseDialect createDialect() {
-    return new Db2DatabaseDialect(sourceConfigWithUrl("jdbc:db2://something"));
+    return new Db2DatabaseDialect(sourceConfigWithUrl("jdbc:db2://something",
+        JdbcSourceConnectorConfig.QUOTE_CONFIG, ""));
   }
 
   @Test
@@ -148,7 +150,7 @@ public class Db2DatabaseDialectTest extends BaseDialectTest<Db2DatabaseDialect> 
   @Test
   public void insert() {
     TableId customers = tableId("customers");
-    String expected = "INSERT INTO \"customers\"(\"age\",\"firstName\",\"lastName\") VALUES(?,?,?)";
+    String expected = "INSERT INTO customers(age,firstName,lastName) VALUES(?,?,?)";
     String sql = dialect.buildInsertStatement(customers, columns(customers),
                                               columns(customers, "age", "firstName", "lastName")
     );

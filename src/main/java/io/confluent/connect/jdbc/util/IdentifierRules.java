@@ -133,7 +133,7 @@ public class IdentifierRules {
     int index;
     String segment;
     do {
-      if (!lead.equals(UNSUPPORTED_QUOTE) && fqn.startsWith(lead)) {
+      if (!lead.isEmpty() && !lead.equals(UNSUPPORTED_QUOTE) && fqn.startsWith(lead)) {
         int end = fqn.indexOf(trail, lead.length());
         if (end < 0) {
           throw new IllegalArgumentException(
